@@ -1,4 +1,4 @@
-import type { Project } from "@opencut/editor-core";
+import type { Project } from "./types";
 
 export function addClipToTrack(track: Project["tracks"][number], clip: Project["tracks"][number]["clips"][number]) {
   return {

@@ -1,4 +1,4 @@
-import type { Project } from "@opencut/editor-core";
+import type { Project } from "./types";
 
 export function saveProjectState(project: Project) {
   localStorage.setItem("qass-ai-project", JSON.stringify(project));

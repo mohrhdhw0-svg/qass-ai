@@ -14,7 +14,7 @@ export function usePreviewRuntime(src?: string) {
     }
 
     setStatus("loading");
-    const worker = new Worker(new URL("../render/render-worker.ts", import.meta.url));
+    const worker = new Worker(new URL("./render-worker.ts", import.meta.url));
     worker.postMessage({ type: "preview", payload: { src } });
 
     worker.onmessage = (event) => {
