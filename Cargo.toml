@@ -1,9 +1,9 @@
 [workspace]
-resolver = "3"
 members = [
-  'apps/desktop',
-  # 'crates/*',
+  "apps/desktop",
+  "crates/wasm-bindings"
 ]
+resolver = "2"
 
 [workspace.package]
 version = "0.1.0"

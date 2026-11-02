@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export function usePreviewRuntime(src?: string) {
   const [frames, setFrames] = useState<any[]>([]);

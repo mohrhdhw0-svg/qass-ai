@@ -1,4 +1,4 @@
-use client
+use wasm_bindgen::prelude::*;
 
 #[wasm_bindgen]
 pub fn render_preview(input: &str) -> String {

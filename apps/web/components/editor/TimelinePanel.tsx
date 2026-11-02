@@ -1,5 +1,6 @@
 "use client";
 
+import { type DragEvent } from "react";
 import { useEditorStore, useSelectionStore } from "@opencut/editor-core";
 import { addMediaToProject } from "../../lib/project/add-media";
 
@@ -8,7 +9,7 @@ export function TimelinePanel({ project }: { project: any | null }) {
   const setSelection = useSelectionStore((state) => state.setSelection);
   const clearSelection = useSelectionStore((state) => state.clearSelection);
 
-  const handleDrop = (event: React.DragEvent<HTMLDivElement>, trackId: string) => {
+  const handleDrop = (event: DragEvent<HTMLDivElement>, trackId: string) => {
     event.preventDefault();
     const files = event.dataTransfer.files;
     Array.from(files).forEach((file) => addMediaToProject(file));

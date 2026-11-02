@@ -1,0 +1,14 @@
+[package]
+name = "qass-ai-wasm-bindings"
+version = "0.1.0"
+edition = "2024"
+license = "MIT"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+wasm-bindgen = "0.2"
+
+[features]
+default = []
