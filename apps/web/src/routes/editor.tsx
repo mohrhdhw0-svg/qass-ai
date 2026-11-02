@@ -1,9 +1,11 @@
-import { Link } from '@tanstack/react-router'
+import { Link, createFileRoute } from '@tanstack/react-router'
 
 import { Button } from '../components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card'
 
-const tools = [
+export const Route = createFileRoute('/editor')({ component: Editor })
+
+const toolItems = [
   'Library',
   'Captions',
   'Effects',
@@ -12,17 +14,20 @@ const tools = [
   'Templates',
 ]
 
-const mediaLibrary = [
-  { name: 'Drone A', meta: '4K • 00:18', accent: 'bg-[#00B8DB]' },
-  { name: 'B-roll Closeup', meta: '4K • 00:12', accent: 'bg-sky-500' },
-  { name: 'Talking Head', meta: '1080p • 00:33', accent: 'bg-cyan-500' },
-  { name: 'Product Shot', meta: '4K • 00:08', accent: 'bg-sky-700' },
+const clipLibrary = [
+  { name: 'Drone A', meta: '4K • 00:18', color: 'bg-[#00B8DB]' },
+  { name: 'B-roll Closeup', meta: '4K • 00:12', color: 'bg-sky-500' },
+  { name: 'Talking Head', meta: '1080p • 00:33', color: 'bg-cyan-500' },
+  { name: 'Product Shot', meta: '4K • 00:08', color: 'bg-sky-700' },
 ]
 
+const filters = ['Cinematic', 'Soft Glow', 'High Contrast', 'Warm Fade', 'Monochrome']
+const textStyles = ['Title', 'Subtitle', 'Lower Third', 'Callout']
+
 const timelineTracks = [
-  { name: 'Video 1', items: ['Intro', 'B-roll', 'Product shot'], accent: 'bg-[#00B8DB]' },
-  { name: 'Audio', items: ['Voiceover', 'Music bed'], accent: 'bg-sky-600' },
-  { name: 'Text', items: ['Title', 'CTA'], accent: 'bg-cyan-500' },
+  { name: 'Video 1', clips: ['Intro', 'B-roll', 'Product shot'] },
+  { name: 'Audio', clips: ['Voiceover', 'Music bed'] },
+  { name: 'Text', clips: ['Title', 'CTA'] },
 ]
 
 const inspectorFields = [
@@ -35,13 +40,11 @@ const inspectorFields = [
 
 const sceneMarkers = ['00:00', '00:05', '00:10', '00:15', '00:20', '00:25', '00:30']
 
-export const Route = createFileRoute('/editor')({ component: Editor })
-
 function Editor() {
   return (
     <div className="min-h-screen bg-[#edfaff] text-slate-900">
       <header className="border-b border-sky-100 bg-white/90 backdrop-blur-sm">
-        <div className="mx-auto flex max-w-[1600px] items-center justify-between px-5 py-4">
+        <div className="mx-auto flex max-w-[1700px] items-center justify-between px-5 py-4">
           <div className="flex items-center gap-3">
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#00B8DB] text-lg font-bold text-white shadow-[0_12px_30px_rgba(0,184,219,0.35)]">
               Q
@@ -68,7 +71,7 @@ function Editor() {
 
           <div className="flex items-center gap-3">
             <Link to="/" className="text-sm font-medium text-slate-600 hover:text-slate-900">
-              Back home
+              Home
             </Link>
             <Button size="sm" className="bg-[#00B8DB] text-white hover:bg-[#00a7cc]">
               Export
@@ -77,8 +80,8 @@ function Editor() {
         </div>
       </header>
 
-      <main className="mx-auto max-w-[1600px] p-5">
-        <section className="grid gap-4 xl:grid-cols-[220px_minmax(0,1fr)_330px]">
+      <main className="mx-auto max-w-[1700px] p-5">
+        <section className="grid gap-4 xl:grid-cols-[240px_minmax(0,1fr)_360px]">
           <aside className="rounded-[24px] border border-sky-100 bg-white p-4 shadow-sm">
             <div className="mb-4 flex items-center justify-between">
               <h2 className="text-[10px] font-semibold uppercase tracking-[0.24em] text-slate-500">Tools</h2>
@@ -88,7 +91,7 @@ function Editor() {
             </div>
 
             <div className="space-y-2">
-              {tools.map((tool, index) => (
+              {toolItems.map((tool, index) => (
                 <button
                   key={tool}
                   type="button"
@@ -193,17 +196,17 @@ function Editor() {
                       <div key={track.name} className="rounded-xl border border-sky-100 bg-white p-2">
                         <div className="mb-2 flex items-center justify-between px-2 text-xs text-slate-500">
                           <span>{track.name}</span>
-                          <span>{track.items.length} items</span>
+                          <span>{track.clips.length} items</span>
                         </div>
                         <div className="flex gap-2 overflow-hidden rounded-xl bg-slate-50 p-2 ring-1 ring-slate-100">
-                          {track.items.map((item, idx) => (
+                          {track.clips.map((clip, idx) => (
                             <div
-                              key={item}
+                              key={clip}
                               className={`flex min-w-[120px] items-center justify-between rounded-lg px-3 py-3 text-sm font-medium text-white ${
                                 idx % 2 === 0 ? 'bg-[#00B8DB]' : 'bg-sky-600'
                               }`}
                             >
-                              <span>{item}</span>
+                              <span>{clip}</span>
                               <span className="text-[10px] opacity-80">00:10</span>
                             </div>
                           ))}
@@ -249,14 +252,45 @@ function Editor() {
 
             <Card className="border-sky-100 bg-white shadow-sm">
               <CardHeader className="px-5 py-4">
+                <p className="text-[10px] uppercase tracking-[0.24em] text-slate-500">Filters</p>
+                <CardTitle className="mt-1 text-base text-slate-900">Looks</CardTitle>
+              </CardHeader>
+
+              <CardContent className="space-y-2 px-5 pb-5">
+                {filters.map((filter) => (
+                  <div key={filter} className="flex items-center justify-between rounded-xl border border-slate-100 bg-slate-50 px-3 py-2 text-sm text-slate-700">
+                    <span>{filter}</span>
+                    <span className="text-slate-400">›</span>
+                  </div>
+                ))}
+              </CardContent>
+            </Card>
+
+            <Card className="border-sky-100 bg-white shadow-sm">
+              <CardHeader className="px-5 py-4">
+                <p className="text-[10px] uppercase tracking-[0.24em] text-slate-500">Text</p>
+                <CardTitle className="mt-1 text-base text-slate-900">Title presets</CardTitle>
+              </CardHeader>
+
+              <CardContent className="space-y-2 px-5 pb-5">
+                {textStyles.map((style) => (
+                  <div key={style} className="rounded-xl border border-slate-100 bg-slate-50 px-3 py-2 text-sm text-slate-700">
+                    {style}
+                  </div>
+                ))}
+              </CardContent>
+            </Card>
+
+            <Card className="border-sky-100 bg-white shadow-sm">
+              <CardHeader className="px-5 py-4">
                 <p className="text-[10px] uppercase tracking-[0.24em] text-slate-500">Library</p>
                 <CardTitle className="mt-1 text-base text-slate-900">Media assets</CardTitle>
               </CardHeader>
 
               <CardContent className="space-y-3 px-5 pb-5">
-                {mediaLibrary.map((clip) => (
+                {clipLibrary.map((clip) => (
                   <div key={clip.name} className="flex items-center gap-3 rounded-xl border border-slate-100 bg-slate-50 p-2">
-                    <div className={`h-12 w-16 rounded-lg ${clip.accent}`} />
+                    <div className={`h-12 w-16 rounded-lg ${clip.color}`} />
                     <div className="flex-1">
                       <p className="text-sm font-medium text-slate-900">{clip.name}</p>
                       <p className="text-xs text-slate-500">{clip.meta}</p>
