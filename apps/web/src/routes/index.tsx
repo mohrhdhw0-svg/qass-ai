@@ -15,7 +15,7 @@ const tools = [
   { name: 'Templates', active: false },
 ]
 
-const clips = [
+const mediaStack = [
   { label: 'Intro', duration: '00:04', color: 'bg-[#00B8DB]' },
   { label: 'B-roll', duration: '00:12', color: 'bg-sky-500' },
   { label: 'Talking Head', duration: '00:17', color: 'bg-cyan-400' },
@@ -23,9 +23,16 @@ const clips = [
 ]
 
 const timelineTracks = [
-  { name: 'Video 1', items: ['Intro', 'B-roll', 'Outro'], active: true },
-  { name: 'Audio', items: ['Voiceover', 'Music'], active: false },
-  { name: 'Text', items: ['Title'], active: false },
+  { name: 'Video 1', items: ['Intro', 'B-roll', 'Outro'], accent: 'bg-[#00B8DB]' },
+  { name: 'Audio', items: ['Voiceover', 'Music'], accent: 'bg-sky-600' },
+  { name: 'Text', items: ['Title'], accent: 'bg-cyan-500' },
+]
+
+const inspectorRows = [
+  ['Trim start', '00:00'],
+  ['Trim end', '00:03'],
+  ['Scale', '100%'],
+  ['Opacity', '92%'],
 ]
 
 function Home() {
@@ -59,17 +66,21 @@ function Home() {
 
           <div className="flex items-center gap-3">
             <Button variant="ghost" size="sm">Drafts</Button>
-            <Button size="sm" className="bg-[#00B8DB] text-white hover:bg-[#00a7cc]">Export</Button>
+            <Button size="sm" className="bg-[#00B8DB] text-white hover:bg-[#00a7cc]">
+              Export
+            </Button>
           </div>
         </div>
       </header>
 
       <main className="mx-auto max-w-[1600px] p-6">
-        <section className="mb-6 grid gap-4 xl:grid-cols-[240px_minmax(0,1fr)_320px]">
+        <section className="grid gap-4 xl:grid-cols-[240px_minmax(0,1fr)_320px]">
           <aside className="rounded-2xl border border-sky-100 bg-white p-4 shadow-sm">
             <div className="mb-5 flex items-center justify-between">
               <h2 className="text-sm font-semibold uppercase tracking-[0.18em] text-slate-500">Tools</h2>
-              <span className="rounded-full bg-sky-100 px-2 py-1 text-[10px] font-medium text-[#00B8DB]">Live</span>
+              <span className="rounded-full bg-sky-100 px-2 py-1 text-[10px] font-medium text-[#00B8DB]">
+                Live
+              </span>
             </div>
 
             <div className="space-y-2">
@@ -92,7 +103,9 @@ function Home() {
             <div className="mt-6 rounded-2xl bg-slate-950 p-4 text-white">
               <p className="text-[10px] uppercase tracking-[0.2em] text-sky-200">AI assist</p>
               <p className="mt-3 text-lg font-semibold">Auto cut</p>
-              <p className="mt-2 text-sm text-slate-300">Find the best moments, remove filler, and generate subtitles in one click.</p>
+              <p className="mt-2 text-sm text-slate-300">
+                Find the best moments, remove filler, and generate subtitles in one click.
+              </p>
             </div>
           </aside>
 
@@ -106,7 +119,9 @@ function Home() {
 
                 <div className="flex items-center gap-2">
                   <Button variant="outline" size="sm">Auto-save</Button>
-                  <Button size="sm" className="bg-[#00B8DB] text-white hover:bg-[#00a7cc]">Render</Button>
+                  <Button size="sm" className="bg-[#00B8DB] text-white hover:bg-[#00a7cc]">
+                    Render
+                  </Button>
                 </div>
               </CardHeader>
 
@@ -163,7 +178,7 @@ function Home() {
                               key={item}
                               className={`flex min-w-[120px] items-center justify-between rounded-lg px-3 py-3 text-sm font-medium text-white ${
                                 idx % 2 === 0 ? 'bg-[#00B8DB]' : 'bg-sky-600'
-                              } ${track.active ? 'opacity-100' : 'opacity-70'}`}
+                              }`}
                             >
                               <span>{item}</span>
                               <span className="text-[10px] opacity-80">00:10</span>
@@ -174,11 +189,17 @@ function Home() {
                     ))}
                   </TabsContent>
 
-                  <TabsContent value="transitions" className="rounded-2xl border border-sky-100 bg-sky-50 p-4 text-sm text-slate-600">
+                  <TabsContent
+                    value="transitions"
+                    className="rounded-2xl border border-sky-100 bg-sky-50 p-4 text-sm text-slate-600"
+                  >
                     Fade, slide, whip-pan, zoom dissolve, and AI match cut presets are ready.
                   </TabsContent>
 
-                  <TabsContent value="audio" className="rounded-2xl border border-sky-100 bg-sky-50 p-4 text-sm text-slate-600">
+                  <TabsContent
+                    value="audio"
+                    className="rounded-2xl border border-sky-100 bg-sky-50 p-4 text-sm text-slate-600"
+                  >
                     Voiceover levels, background music, and cleaning tools are all synced with the project.
                   </TabsContent>
                 </Tabs>
@@ -200,13 +221,11 @@ function Home() {
                 </div>
 
                 <div className="space-y-2">
-                  {[
-                    ['Trim start', '00:00'],
-                    ['Trim end', '00:03'],
-                    ['Scale', '100%'],
-                    ['Opacity', '92%'],
-                  ].map(([label, value]) => (
-                    <div key={label} className="flex items-center justify-between rounded-xl border border-slate-100 bg-slate-50 px-3 py-2 text-sm">
+                  {inspectorRows.map(([label, value]) => (
+                    <div
+                      key={label}
+                      className="flex items-center justify-between rounded-xl border border-slate-100 bg-slate-50 px-3 py-2 text-sm"
+                    >
                       <span className="text-slate-500">{label}</span>
                       <span className="font-medium text-slate-900">{value}</span>
                     </div>
@@ -226,7 +245,7 @@ function Home() {
               </CardHeader>
 
               <CardContent className="space-y-3 px-5 pb-5">
-                {clips.map((clip) => (
+                {mediaStack.map((clip) => (
                   <div key={clip.label} className="flex items-center gap-3 rounded-xl border border-slate-100 bg-slate-50 p-2">
                     <div className={`h-12 w-16 rounded-lg ${clip.color}`} />
                     <div className="flex-1">
