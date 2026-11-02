@@ -16,7 +16,11 @@ export const Route = createRootRoute({
         content: 'width=device-width, initial-scale=1',
       },
       {
-        title: 'OpenCut rewrite | beta.opencut.app',
+        name: 'theme-color',
+        content: '#00B8DB',
+      },
+      {
+        title: 'Qass AI Studio',
       },
     ],
     links: [
@@ -53,7 +57,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       <head>
         <HeadContent />
       </head>
-      <body>
+      <body className="bg-[#edfaff] text-slate-900">
         <TooltipProvider>
           {children}
         </TooltipProvider>
