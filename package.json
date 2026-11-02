@@ -1,0 +1,17 @@
+{
+  "name": "qass-ai-editor",
+  "private": true,
+  "version": "0.1.0",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "packageManager": "bun@1.1.39",
+  "scripts": {
+    "dev:web": "bun run --filter @opencut/web dev",
+    "dev:api": "bun run --filter @opencut/api dev",
+    "build:web": "bun run --filter @opencut/web build",
+    "typecheck": "bun run --filter @opencut/web typecheck && bun run --filter @opencut/editor-core typecheck",
+    "lint:web": "bun run --filter @opencut/web lint"
+  }
+}
